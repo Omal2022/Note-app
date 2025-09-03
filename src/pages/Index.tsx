@@ -261,7 +261,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex h-[calc(100vh-73px)] w-full">
+      <div className="flex h-[calc(100vh-73px)]  md:ml-[-110px] ">
         <NoteSidebar
           notes={getDisplayedNotes()}
           folders={folders}
@@ -282,7 +282,7 @@ const Index = () => {
             onSave={handleSaveNote}
           />
         ) : (
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center w-full h-full">
             <div className="text-center space-y-6 max-w-md">
               <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
                 <Brain className="h-10 w-10 text-primary" />

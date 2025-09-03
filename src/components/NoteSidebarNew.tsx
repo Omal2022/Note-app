@@ -16,10 +16,10 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  Plus,
-  Search,
-  FileText,
+import { 
+  Plus, 
+  Search, 
+  FileText, 
   MoreHorizontal,
   Calendar,
   FolderPlus,
@@ -28,7 +28,7 @@ import {
   Lightbulb,
   CheckSquare,
   Folder as FolderIcon,
-  Hash,
+  Hash
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Note, Folder as FolderType } from "@/hooks/use-note-storage";
@@ -52,48 +52,44 @@ const FOLDER_ICONS = {
   Users,
   Lightbulb,
   CheckSquare,
-  FolderIcon,
+  FolderIcon
 };
 
 const FOLDER_COLORS = {
   blue: "text-blue-600 dark:text-blue-400",
-  green: "text-green-600 dark:text-green-400",
+  green: "text-green-600 dark:text-green-400", 
   purple: "text-purple-600 dark:text-purple-400",
   yellow: "text-yellow-600 dark:text-yellow-400",
   red: "text-red-600 dark:text-red-400",
-  gray: "text-gray-600 dark:text-gray-400",
+  gray: "text-gray-600 dark:text-gray-400"
 };
 
-export function NoteSidebar({
-  notes,
+export function NoteSidebar({ 
+  notes, 
   folders,
-  activeNoteId,
+  activeNoteId, 
   activeFolderId,
   searchQuery,
-  onSelectNote,
+  onSelectNote, 
   onSelectFolder,
   onCreateNote,
   onDeleteNote,
-  onSearchChange,
+  onSearchChange
 }: NoteSidebarProps) {
   const { state } = useSidebar();
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
-    {
-      folders: true,
-      recentNotes: true,
-    }
-  );
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    folders: true,
+    recentNotes: true
+  });
 
   const formatDate = (date: Date) => {
     const now = new Date();
-    const diffInDays = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
-    );
-
+    const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    
     if (diffInDays === 0) return "Today";
     if (diffInDays === 1) return "Yesterday";
     if (diffInDays < 7) return `${diffInDays} days ago`;
-
+    
     return date.toLocaleDateString();
   };
 
@@ -102,24 +98,21 @@ export function NoteSidebar({
   };
 
   const getFolderIcon = (iconName: string) => {
-    const IconComponent =
-      FOLDER_ICONS[iconName as keyof typeof FOLDER_ICONS] || FolderIcon;
+    const IconComponent = FOLDER_ICONS[iconName as keyof typeof FOLDER_ICONS] || FolderIcon;
     return IconComponent;
   };
 
   const getFolderColorClass = (color: string) => {
-    return (
-      FOLDER_COLORS[color as keyof typeof FOLDER_COLORS] || FOLDER_COLORS.gray
-    );
+    return FOLDER_COLORS[color as keyof typeof FOLDER_COLORS] || FOLDER_COLORS.gray;
   };
 
   const getNotesInFolder = (folderId: string) => {
     if (folderId === "all") return notes;
-    return notes.filter((note) => note.folder === folderId);
+    return notes.filter(note => note.folder === folderId);
   };
 
   const toggleGroup = (groupId: string) => {
-    setExpandedGroups((prev) => ({ ...prev, [groupId]: !prev[groupId] }));
+    setExpandedGroups(prev => ({ ...prev, [groupId]: !prev[groupId] }));
   };
 
   // Show recent notes in collapsed sidebar
@@ -127,7 +120,6 @@ export function NoteSidebar({
   const recentNotes = notes.slice(0, 5);
 
   return (
-    // <h1>hello</h1>
     <Sidebar className={cn("border-r", collapsed ? "w-14" : "w-80")}>
       <SidebarContent>
         {/* Header with search */}
@@ -135,11 +127,15 @@ export function NoteSidebar({
           <div className="p-4 border-b space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">AI Notes</h2>
-              <Button onClick={onCreateNote} size="sm" className="h-8 w-8 p-0">
+              <Button 
+                onClick={onCreateNote}
+                size="sm"
+                className="h-8 w-8 p-0"
+              >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
-
+            
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -155,7 +151,11 @@ export function NoteSidebar({
         {/* Collapsed header */}
         {collapsed && (
           <div className="p-2 border-b">
-            <Button onClick={onCreateNote} size="sm" className="w-full h-8">
+            <Button 
+              onClick={onCreateNote}
+              size="sm"
+              className="w-full h-8"
+            >
               <Plus className="h-4 w-4" />
             </Button>
           </div>
@@ -163,13 +163,13 @@ export function NoteSidebar({
 
         {/* Folders Section */}
         <SidebarGroup>
-          <SidebarGroupLabel
+          <SidebarGroupLabel 
             onClick={() => !collapsed && toggleGroup("folders")}
             className={cn("cursor-pointer", !collapsed && "hover:bg-accent")}
           >
             {!collapsed && "Folders"}
           </SidebarGroupLabel>
-
+          
           {(!collapsed || expandedGroups.folders) && (
             <SidebarGroupContent>
               <SidebarMenu>
@@ -184,16 +184,12 @@ export function NoteSidebar({
                         onClick={() => onSelectFolder(folder.id)}
                         className={cn(
                           "justify-between",
-                          isActive &&
-                            "bg-accent border border-border font-medium"
+                          isActive && "bg-accent border border-border font-medium"
                         )}
                       >
                         <div className="flex items-center gap-2">
-                          <IconComponent
-                            className={cn(
-                              "h-4 w-4",
-                              getFolderColorClass(folder.color)
-                            )}
+                          <IconComponent 
+                            className={cn("h-4 w-4", getFolderColorClass(folder.color))} 
                           />
                           {!collapsed && <span>{folder.name}</span>}
                         </div>
@@ -216,13 +212,13 @@ export function NoteSidebar({
         {/* Recent Notes Section */}
         {!collapsed && (
           <SidebarGroup>
-            <SidebarGroupLabel
+            <SidebarGroupLabel 
               onClick={() => toggleGroup("recentNotes")}
               className="cursor-pointer hover:bg-accent"
             >
               Recent Notes
             </SidebarGroupLabel>
-
+            
             {expandedGroups.recentNotes && (
               <SidebarGroupContent>
                 <ScrollArea className="h-[300px]">
@@ -240,8 +236,7 @@ export function NoteSidebar({
                           onClick={() => onSelectNote(note)}
                           className={cn(
                             "p-3 rounded-lg cursor-pointer transition-colors hover:bg-accent group",
-                            activeNoteId === note.id &&
-                              "bg-accent border border-border"
+                            activeNoteId === note.id && "bg-accent border border-border"
                           )}
                         >
                           <div className="flex items-start justify-between gap-2 mb-2">
@@ -260,35 +255,28 @@ export function NoteSidebar({
                               <MoreHorizontal className="h-3 w-3" />
                             </Button>
                           </div>
-
+                          
                           <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
                             {getPreview(note.content) || "No content"}
                           </p>
-
+                          
                           {/* Tags */}
                           {note.tags.length > 0 && (
                             <div className="flex flex-wrap gap-1 mb-2">
                               {note.tags.slice(0, 2).map((tag) => (
-                                <Badge
-                                  key={tag}
-                                  variant="outline"
-                                  className="text-xs h-4 px-1"
-                                >
+                                <Badge key={tag} variant="outline" className="text-xs h-4 px-1">
                                   <Hash className="h-2 w-2 mr-1" />
                                   {tag}
                                 </Badge>
                               ))}
                               {note.tags.length > 2 && (
-                                <Badge
-                                  variant="outline"
-                                  className="text-xs h-4 px-1"
-                                >
+                                <Badge variant="outline" className="text-xs h-4 px-1">
                                   +{note.tags.length - 2}
                                 </Badge>
                               )}
                             </div>
                           )}
-
+                          
                           {/* Date and word count */}
                           <div className="flex items-center justify-between text-xs text-muted-foreground">
                             <div className="flex items-center gap-1">
